@@ -1,0 +1,32 @@
+<div class="h-full p-3 pe-0 bg-white border-e transition-all duration-150"
+    [ngClass]="{ 'w-72': !isCollapse, 'w-20': isCollapse }">
+    <div class="flex flex-col items-center gap-10 h-full justify-between">
+
+
+        <div class="w-full text-center" [ngClass]="{ 'text-sm': isCollapse, 'text-lg font-semibold': !isCollapse }">
+            <span class="block py-2 text-mainColor" *ngIf="!isCollapse" translate> Main Page </span>
+            <i *ngIf="isCollapse" class="fa-solid fa-bars text-mainColor text-xl"></i>
+        </div>
+
+        <ul class="flex flex-col flex-1 w-full gap-2 overflow-y-auto p-2" style="min-height: 0;">
+            @for ( link of links; track link) {
+            <li class="text-xl text-gray-600">
+                <a class="font-normal flex items-center gap-3 p-2.5 rounded-md whitespace-nowrap"
+                    [routerLink]="['/',currentLanguage,link.routerLink]" routerLinkActive="bg-primary text-white"
+                    [ngClass]="{
+            'justify-center': isCollapse,
+            'justify-start': !isCollapse
+          }">
+                    <i class="{{ link.icon }}"></i>
+                    @if (!isCollapse) { <span translate>{{link.name}}</span> }
+                </a>
+            </li>
+            }
+        </ul>
+
+
+        <button class="self-end p-4" (click)="isCollapse = !isCollapse">
+            <i class="fa-solid fa-chevron-right" [ngClass]="{ 'rotate-180': isCollapse }"></i>
+        </button>
+    </div>
+</div>

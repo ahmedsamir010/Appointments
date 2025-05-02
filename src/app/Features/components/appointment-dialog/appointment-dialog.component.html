@@ -1,0 +1,107 @@
+@if (apiErrorMessage.length > 0) {
+<div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">
+    @for (item of apiErrorMessage; track $index) {
+    {{ item | translate }}
+    }
+</div>
+}
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+    @if(mode === 'add') {
+    <!-- Customer Name -->
+    <input type="text" Input formControlName="customerName" [required]="true" label="CustomerName" />
+    @if(form.get('customerName')?.invalid && (form.get('customerName')?.dirty || form.get('customerName')?.touched)){
+    <div class="text-red-500 text-sm mt-1">
+        @if(form.get('customerName')?.errors?.['required']){
+        <span translate>Customer name is required</span>
+        }
+    </div>
+    }
+
+    <!-- Appointment Date -->
+    <div class="w-full mt-4">
+        <div class="flex items-center gap-1 mb-2">
+            <label for="appointmentDate" class="text-base block" translate>Appointment Date</label>
+            <span class="text-red-500 text-sm">*</span>
+        </div>
+        <p-datepicker inputId="calendar-12h" formControlName="appointmentDate" [showTime]="true" hourFormat="12"
+            [minDate]="minDate" class="w-full"></p-datepicker>
+        @if(form.get('appointmentDate')?.invalid && (form.get('appointmentDate')?.dirty ||
+        form.get('appointmentDate')?.touched)){
+        <div class="text-red-500 text-sm mt-1">
+            @if(form.get('appointmentDate')?.errors?.['required']){
+            <span translate>Appointment date is required</span>
+            }
+        </div>
+        }
+
+    </div>
+
+    <!-- Notes -->
+
+    <div class="flex flex-col h-full">
+        <textarea Input label="Notes" [required]="false" formControlName="notes" rows="5"
+            [placeholder]="'Notes' | translate" class="h-full"></textarea>
+    </div>
+    } @else {
+    <!-- Customer Name -->
+    <input type="text" Input formControlName="customerName" [required]="true" label="CustomerName" />
+    @if(form.get('customerName')?.invalid && (form.get('customerName')?.dirty || form.get('customerName')?.touched)){
+    <div class="text-red-500 text-sm mt-1">
+        @if(form.get('customerName')?.errors?.['required']){
+        <span translate>Customer name is required</span>
+        }
+    </div>
+    }
+    <!-- Appointment Date -->
+    <div class="w-full mt-4">
+        <div class="flex items-center gap-1 mb-2">
+            <label for="appointmentDate" class="text-base font-semibold block" translate>Appointment Date</label>
+            <span class="text-red-500 text-sm">*</span>
+        </div>
+        <input type="datetime-local" id="appointmentDate" formControlName="appointmentDate"
+            [min]="minDate.toISOString().slice(0, 16)"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out" />
+    </div>
+    <!-- Appointment Status -->
+    <div class="card flex flex-col mt-3 w-full">
+        <div class="flex items-center gap-1 mb-2">
+            <label for="status" class="text-base block" translate>Select Appointment Status</label>
+            <span class="text-red-500 text-sm">*</span>
+        </div>
+
+        <p-select inputId="status" formControlName="status" [options]="appointmentStatusOptions" optionValue="value"
+            optionLabel="label" [filter]="true" filterBy="label" [emptyFilterMessage]="'No results found' | translate"
+            [appendTo]="'self'" [showClear]="true" [autoDisplayFirst]="false"
+            placeholder="{{ 'Select Appointment Status' | translate }}" class="w-full">
+            <ng-template #selectedItem let-selectedOption>
+                <div class="flex items-center gap-2">
+                    <div>{{ selectedOption?.label }}</div>
+                </div>
+            </ng-template>
+
+            <ng-template let-option #item>
+                <div class="flex items-center gap-2">
+                    <div>{{ option.label }}</div>
+                </div>
+            </ng-template>
+        </p-select>
+
+        @if(form.get('status')?.invalid && (form.get('status')?.dirty || form.get('status')?.touched)){
+        <div class="text-red-500 text-sm mt-1">
+            <span *ngIf="form.get('status')?.errors?.['required']" translate>Status is required</span>
+        </div>
+        }
+    </div>
+
+    <!-- Notes -->
+    <div class="flex flex-col h-full mt-4">
+        <textarea Input label="Notes" formControlName="notes" rows="5" [placeholder]="'Notes' | translate"
+            class="h-full"></textarea>
+    </div>
+
+    }
+
+    <!-- Footer -->
+    <app-form-footer [disabled]="disabled" (cancelHandler)="ref.close()"></app-form-footer>
+</form>

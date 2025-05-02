@@ -1,0 +1,13 @@
+<div class="w-screen h-screen overflow-hidden">
+  <div class="flex h-full">
+    <app-side-bar></app-side-bar>
+    <div class="w-full h-full flex flex-col">
+      <app-header></app-header>
+      <div class="bg-white m-5 rounded-xl p-2 flex-1 overflow-scroll">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<p-confirmdialog />
+<p-toast />

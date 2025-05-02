@@ -1,0 +1,22 @@
+::ng-deep .custom-table thead th {
+  background-color: #f6f8fa !important;
+}
+::ng-deep .p-confirmdialog{
+    width: 532px !important;
+    width: 480px !important;
+}
+::ng-deep  .p-datepicker{
+  width: 100% !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #10182879;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}

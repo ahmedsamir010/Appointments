@@ -1,0 +1,18 @@
+<div class="w-full bg-white p-3 border-b">
+    <div class="flex justify-between items-center">
+        <div class="text-2xl font-semibold">
+            <p class="text-primary" translate>Appointment Scheduling</p>
+        </div>
+        <div class="flex gap-4">
+            <button (click)="languageService.toggleLanguage()"
+                class="px-2 py-1 rounded-xl border flex justify-center items-center gap-2 hover:bg-gray-100">
+                <span>{{ currentLanguage === "en" ? "العربية" : "En" }}</span>
+                <img [src]="
+              currentLanguage === 'en'
+                ? 'assets/images/saudi-arabia.png'
+                : 'assets/images/US.png'
+            " alt="Flag" class="w-5 h-5" />
+            </button>
+        </div>
+    </div>
+</div>

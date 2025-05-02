@@ -1,0 +1,10 @@
+<div class="flex items-center justify-center gap-3 border-t pt-4 mt-4">
+    <button [disabled]="disabled" type="submit" class="bg-primary text-sm rounded-lg py-3 w-full text-white" (click)="submitHandler.emit()"
+        translate>
+        Submit
+    </button>
+    <button type="button" class="border text-sm border-primary rounded-lg py-3 w-full text-primary"
+        (click)="cancelHandler.emit()" translate>
+        Cancel
+    </button>
+</div>

@@ -1,0 +1,17 @@
+@use "tailwindcss/base";
+@use "tailwindcss/components";
+@use "tailwindcss/utilities";
+
+body {
+  font-family: "Alexandria", serif;
+  background-color: #f8f9fb;
+}
+
+::ng-deep .p-datepicker {
+  width: 100% !important;
+}
+::ng-deep .p-confirmdialog {
+  width: 300px !important;
+  height: 450px !important;
+}
+ 

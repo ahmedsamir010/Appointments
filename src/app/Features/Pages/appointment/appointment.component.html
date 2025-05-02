@@ -1,0 +1,120 @@
+<div class="flex items-center justify-between mt-5 mb-3 px-2">
+    <h2 class="text-xl font-semibold text-gray-700" translate>
+        Appointments List
+    </h2>
+
+    <button class="bg-primary rounded-lg py-3 px-5 text-white" (click)="addAppointment()" translate>
+        <i class="fa-solid fa-plus me-2"></i> Add Appointment
+    </button>
+</div>
+
+<div class="mt-6">
+    <div class="relative max-w-md flex items-center gap-2">
+        <div class="relative w-full">
+            <input [(ngModel)]="searchValue" type="text" placeholder="{{ 'Search' | translate }}"
+                [ngClass]="currentLanguage === 'en' ? 'pr-10 pl-10' : 'pr-10 pl-10'"
+                class="w-full py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary focus:outline-none" />
+            <i class="fa fa-search absolute top-2 start-3 text-black text-lg"></i>
+        </div>
+
+        <button (click)="onSearchClick()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow">
+            <span class="text-white text-base p-2" translate>Search</span>
+        </button>
+    </div>
+</div>
+<div class="card flex flex-row gap-3 w-full mt-3 items-start">
+    <!-- Appointment Status Select -->
+    <div class="w-1/2">
+        <label for="status" class="block mb-1 text-sm font-medium text-gray-700">
+            {{ 'Appointment Status' | translate }}
+        </label>
+        <p-select inputId="status" [(ngModel)]="status" (ngModelChange)="getData()" [options]="appointmentStatusOptions"
+            optionValue="value" optionLabel="label" [filter]="true" filterBy="label"
+            [emptyFilterMessage]="'No results found' | translate" [appendTo]="'self'" [showClear]="true"
+            [autoDisplayFirst]="false" placeholder="{{ 'Select Appointment Status' | translate }}" class="w-full">
+            <ng-template #selectedItem let-selectedOption>
+                <div class="flex items-center gap-2">
+                    <div>{{ selectedOption?.label }}</div>
+                </div>
+            </ng-template>
+
+            <ng-template let-option #item>
+                <div class="flex items-center gap-2">
+                    <div>{{ option.label }}</div>
+                </div>
+            </ng-template>
+        </p-select>
+    </div>
+
+    <!-- Date Range Picker -->
+    <div class="w-1/2">
+        <label class="block mb-1 text-sm font-medium text-gray-700">
+            {{ 'Appointment Date Range' | translate }}
+        </label>
+        <p-datepicker [(ngModel)]="rangeDates" (ngModelChange)="getData()" selectionMode="range" [readonlyInput]="true"
+            [showButtonBar]="true" class="w-full" />
+
+    </div>
+
+</div>
+
+
+
+@if(appointments.length>0){
+<div class="card mt-3">
+    <p-table #dt [value]="appointments" [customSort]="true" (sortFunction)="customSort($event)" class="custom-table"
+        [rows]="10" [first]="first">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="customerName">{{ "CustomerName" | translate }}
+                    <p-sortIcon field="customerName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="dateTime">{{ "DateTime" | translate }}
+                    <p-sortIcon field="dateTime"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status">{{ "Status" | translate }}
+                    <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th pSortableColumn="notes">{{ "Notes" | translate }}
+                    <p-sortIcon field="notes"></p-sortIcon>
+                </th>
+                <th>{{ "Action" | translate }}</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-appointment>
+            <tr class="hover:bg-gray-100">
+                <td>{{ appointment.customerName }}</td>
+                <td>{{ appointment.dateTime | date}}</td>
+                <td>{{AppointmentStatus[appointment.status] | translate}} </td>
+                <td>{{ appointment.notes }}</td>
+                <td>
+                    <div class="flex items-center gap-2">
+                        <div class="text-center bg-[#F3F6F9] rounded-xl cursor-pointer">
+                            <i class="fa-solid fa-pen-to-square text-[#2DCA72] bg-gray-50 cursor-pointer p-2 rounded-full"
+                                (click)="editAppointment(appointment); $event.stopPropagation();"></i>
+                        </div>
+                        <div class="text-center bg-[#F3F6F9] rounded-xl cursor-pointer">
+                            <i class="fa-solid fa-trash text-[#F53D6B] bg-gray-50 cursor-pointer p-2 rounded-full"
+                                (click)="confirmDelete($event,appointment.id); $event.stopPropagation();"></i>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <div class="card flex justify-center">
+        <p-paginator [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[5,10, 20, 30]"
+            (onPageChange)="onPageChange($event)">
+        </p-paginator>
+    </div>
+
+</div>
+
+}
+@else {
+<div class="text-center text-gray-500 mt-5" translate>
+    No appointments found.
+</div>
+}

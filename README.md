@@ -33,5 +33,7 @@ You can test the backend API here:
 2. Clone the repository:
    ```bash
    git clone https://github.com/ahmedsamir010/Appointments.git
-   ش
-3. ÷ىسفشمم 
+3. Install node modules
+    .open terminal and write npm i
+4. Run The Project as write
+   ng s --o

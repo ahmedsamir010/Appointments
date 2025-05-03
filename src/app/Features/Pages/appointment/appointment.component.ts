@@ -154,12 +154,11 @@ export class AppointmentComponent extends BaseComponent implements OnInit {
       return;
     }
   
-    // زوّد 3 ساعات
     dateTime.setHours(dateTime.getHours() + 3);
   
     const updatedData = {
       ...data,
-      dateTime: dateTime.toISOString(), // أو تسيبه كـ Date حسب المطلوب في الـ Dialog
+      dateTime: dateTime.toISOString(), 
     };
   
     this.dialog
